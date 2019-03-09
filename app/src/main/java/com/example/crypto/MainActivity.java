@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         buttonget=findViewById(R.id.button);
 
         jsonrequest();
+        String str;
 
         buttonget.setOnClickListener(new View.OnClickListener() {
             @Override
