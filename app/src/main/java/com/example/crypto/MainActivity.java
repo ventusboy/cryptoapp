@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     RequestQueue rq;
 
     public Button buttonget;
+    String coinName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,17 +33,23 @@ public class MainActivity extends AppCompatActivity {
         final String jsonstring;
 
 
+
         rq = Volley.newRequestQueue(this);
         buttonget=findViewById(R.id.button);
 
-        jsonrequest();
-        String str;
+
+
+
 
         buttonget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                EditText text= (EditText)findViewById(R.id.searchcoininput);
 
+                coinName= text.getText().toString();
+
+                jsonrequest(coinName);
 
             }
         });
@@ -54,11 +62,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void jsonrequest(){
+    public void jsonrequest(String coin){
+
+        //coin="eth";
+
+        final String coin1 = coin;
 
 
 
-        String url = "https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD&api_key=dcb8ee8a020fc0aae10aca956d92c330d4fa95e38433ba76caf58291f4b199a2";
+        String url = "https://min-api.cryptocompare.com/data/price?fsym="+ coin.toUpperCase() + "&tsyms=USD&api_key=dcb8ee8a020fc0aae10aca956d92c330d4fa95e38433ba76caf58291f4b199a2";
 
         //TextView text=(TextView)findViewById(R.id.usd_price);
 
@@ -82,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                             text2.setText(name);
                         } catch (JSONException e) {
 
-                            text2.setText("error");
+                            text2.setText(coin1);
                             e.printStackTrace();
                         }
 

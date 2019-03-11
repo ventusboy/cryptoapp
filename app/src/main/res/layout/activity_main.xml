@@ -8,28 +8,49 @@
 
     <TextView
         android:id="@+id/usd_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="127dp"
+        android:layout_height="44dp"
+        android:layout_marginEnd="153dp"
+        android:layout_marginLeft="153dp"
+        android:layout_marginRight="153dp"
+        android:layout_marginStart="153dp"
+        android:layout_marginTop="47dp"
         android:text="@string/usd_price"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="220dp"
-        android:layout_marginLeft="220dp"
-        android:layout_marginTop="382dp"
-        android:layout_marginEnd="86dp"
-        android:layout_marginRight="86dp"
-        android:layout_marginBottom="81dp"
-        android:text="Button"
+        android:layout_marginBottom="388dp"
+        android:layout_marginEnd="37dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="37dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="131dp"
+        android:text="@string/searchcoin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/searchcoininput"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/searchcoininput"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:layout_marginBottom="390dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:hint="@string/searchcoin"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usd_price" />
 
 </android.support.constraint.ConstraintLayout>
