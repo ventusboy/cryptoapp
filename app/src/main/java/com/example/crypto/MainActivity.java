@@ -29,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     //vars
-    private ArrayList<String> mNames = new ArrayList<>();
-    private ArrayList<String> mImageUrls =new ArrayList<>();
+    public ArrayList<String> mNames = new ArrayList<>();
+    public ArrayList<String> mImageUrls =new ArrayList<>();
 
     RequestQueue rq;
 
@@ -64,10 +64,11 @@ public class MainActivity extends AppCompatActivity {
                 jsonrequest(coinName);
 
 
+
             }
         });
 
-        initImageBitmaps();
+
 
 
 
@@ -133,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                             mNames.add(coin1);
 
 
-                            text2.setText(price);
+                            text2.setText("$"+price);
 
                             initImageBitmaps();
 

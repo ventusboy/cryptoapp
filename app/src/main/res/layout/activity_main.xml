@@ -8,13 +8,13 @@
 
     <TextView
         android:id="@+id/usd_price"
-        android:layout_width="127dp"
+        android:layout_width="171dp"
         android:layout_height="44dp"
         android:layout_marginEnd="153dp"
         android:layout_marginLeft="153dp"
         android:layout_marginRight="153dp"
         android:layout_marginStart="153dp"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="32dp"
         android:text="@string/usd_price"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,42 +26,40 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="388dp"
         android:layout_marginEnd="37dp"
         android:layout_marginLeft="28dp"
         android:layout_marginRight="37dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="131dp"
+        android:layout_marginTop="16dp"
         android:text="@string/searchcoin"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.192"
         app:layout_constraintStart_toEndOf="@+id/searchcoininput"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/usd_price" />
 
     <EditText
         android:id="@+id/searchcoininput"
         android:layout_width="wrap_content"
         android:layout_height="46dp"
-        android:layout_marginBottom="390dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/searchcoin"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/usd_price" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rView"
         android:layout_width="match_parent"
-        android:layout_height="372dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:scrollbars="vertical"
+        android:background="@drawable/roundcornerback"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/searchcoininput" />
 
 </android.support.constraint.ConstraintLayout>
