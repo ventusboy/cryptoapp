@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         rq = Volley.newRequestQueue(this);
         buttonget=findViewById(R.id.button);
-        initImageBitmaps();;
+
 
 
 
@@ -62,8 +63,13 @@ public class MainActivity extends AppCompatActivity {
 
                 jsonrequest(coinName);
 
+
             }
         });
+
+        initImageBitmaps();
+
+
 
 
 
@@ -74,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initImageBitmaps(){
-        mImageUrls.add("https://c1.staticflickr.com/5/4636/25316407448_de5fbf183d_o.jpg");
-        mNames.add("Havasu Falls");
+        //mImageUrls.add("https://c1.staticflickr.com/5/4636/25316407448_de5fbf183d_o.jpg");
+        //mNames.add("Havasu Falls");
 
         initRecyclerView();
 
@@ -90,13 +96,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void jsonrequest(String coin){
+    public void jsonrequest(final String coin){
 
         //coin="eth";
 
-        final String coin1 = coin;
+        final String coin1 = coin.toUpperCase();
 
-        String url = "https://min-api.cryptocompare.com/data/generalinfo?fsyms="+ coin.toUpperCase() + "&tsyms=USD&api_key=dcb8ee8a020fc0aae10aca956d92c330d4fa95e38433ba76caf58291f4b199a2";
+        String url = "https://min-api.cryptocompare.com/data/pricemultifull?fsyms="+ coin1 + "&tsyms=USD&api_key=dcb8ee8a020fc0aae10aca956d92c330d4fa95e38433ba76caf58291f4b199a2";
 
         //TextView text=(TextView)findViewById(R.id.usd_price);
 
@@ -115,11 +121,22 @@ public class MainActivity extends AppCompatActivity {
 
                         try {
 
+                            JSONObject data= (JSONObject) response.getJSONObject("RAW");
+                            JSONObject coinName= (JSONObject) data.getJSONObject(coin1);
+                            JSONObject info= (JSONObject) coinName.getJSONObject("USD");
 
-                            String price = (String) response.getString("USD");
+                            String price = (String) info.getString("PRICE");
+
+                            String imgurl= (String) info.getString("IMAGEURL");
+
+                            mImageUrls.add("https://www.cryptocompare.com"+imgurl);
+                            mNames.add(coin1);
 
 
                             text2.setText(price);
+
+                            initImageBitmaps();
+
                         } catch (JSONException e) {
 
                             text2.setText(coin1);
@@ -184,6 +201,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });*/
         rq.add(jsonObjectRequest);
+
+
 
     }
 }
