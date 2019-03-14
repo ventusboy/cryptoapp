@@ -1,5 +1,6 @@
 package com.example.crypto;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,11 +16,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONArray;
 
 import java.util.ArrayList;
 
@@ -28,9 +27,20 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
+    Context context=this;
+
+    private static Context mContext;
+
+
     //vars
     public ArrayList<String> mNames = new ArrayList<>();
     public ArrayList<String> mImageUrls =new ArrayList<>();
+    private ArrayList<String> mPrices =new ArrayList<>();
+
+
+
+    TinyDB tinydb;
+
 
     RequestQueue rq;
 
@@ -43,12 +53,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         final String jsonstring;
 
+        tinydb=new TinyDB(this);
+
+        //mContext = getApplicationContext();
+
+
 
 
         rq = Volley.newRequestQueue(this);
         buttonget=findViewById(R.id.button);
 
+        mNames=tinydb.getListString("prevNames");
+        mImageUrls=tinydb.getListString("prevImg");
+        mPrices=tinydb.getListString("prevPrice");
 
+        initImageBitmaps();
 
 
 
@@ -57,28 +76,42 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                EditText text= (EditText)findViewById(R.id.searchcoininput);
+
+
+                EditText text= findViewById(R.id.searchcoininput);
 
                 coinName= text.getText().toString();
 
-                jsonrequest(coinName);
+                if(coinName.matches("")){
+                    for(String coin:mNames){
+                        jsonrequest(coin);
+                    }
+                }
+                else
+                    jsonrequest(coinName);
+
+
+
+
+
 
 
 
             }
         });
 
+    }
 
+    public static Context getContext() {
+        return mContext;
+    }
 
+    public class init{
 
-
-
-
-
-
-
+        //TinyDB tinydb = new TinyDB(this);
 
     }
+
 
     private void initImageBitmaps(){
         //mImageUrls.add("https://c1.staticflickr.com/5/4636/25316407448_de5fbf183d_o.jpg");
@@ -91,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
     private void initRecyclerView(){
 
         RecyclerView recyclerView = findViewById(R.id.rView);
-        recycleviewadapter adapter = new recycleviewadapter(this, mNames, mImageUrls);
+        recycleviewadapter adapter = new recycleviewadapter(this, mNames, mImageUrls, mPrices);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -118,20 +151,35 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
 
-                        TextView text2=(TextView)findViewById(R.id.usd_price);
+                        TextView text2= findViewById(R.id.usd_price);
 
                         try {
 
-                            JSONObject data= (JSONObject) response.getJSONObject("RAW");
-                            JSONObject coinName= (JSONObject) data.getJSONObject(coin1);
-                            JSONObject info= (JSONObject) coinName.getJSONObject("USD");
+                            JSONObject data= response.getJSONObject("RAW");
+                            JSONObject coinName= data.getJSONObject(coin1);
+                            JSONObject info= coinName.getJSONObject("USD");
 
-                            String price = (String) info.getString("PRICE");
+                            String price = info.getString("PRICE");
 
-                            String imgurl= (String) info.getString("IMAGEURL");
+                            String imgurl= info.getString("IMAGEURL");
 
-                            mImageUrls.add("https://www.cryptocompare.com"+imgurl);
-                            mNames.add(coin1);
+                            if(mNames.contains(coin1)){
+                                //update price
+                                mPrices.set(mNames.indexOf(coin1),price);
+
+                            }
+                            else{
+                                mImageUrls.add("https://www.cryptocompare.com"+imgurl);
+                                mNames.add(coin1);
+                                mPrices.add(price);
+
+                                tinydb.putListString("prevNames",mNames);
+                                tinydb.putListString("prevImg",mImageUrls);
+                                tinydb.putListString("prevPrice",mPrices);
+
+                            }
+
+
 
 
                             text2.setText("$"+price);
@@ -151,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        TextView text=(TextView)findViewById(R.id.usd_price);
+                        TextView text= findViewById(R.id.usd_price);
 
                         text.setText("error");
 

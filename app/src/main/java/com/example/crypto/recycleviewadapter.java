@@ -23,12 +23,15 @@ public class recycleviewadapter extends RecyclerView.Adapter<recycleviewadapter.
 
     private ArrayList<String> mImageNames =new ArrayList<>();
     private ArrayList<String> mImages =new ArrayList<>();
+    private ArrayList<String> mPrices =new ArrayList<>();
+
     private Context mContext;
 
-    public recycleviewadapter( Context mContext, ArrayList<String> mImageNames, ArrayList<String> mImages) {
+    public recycleviewadapter( Context mContext, ArrayList<String> mImageNames, ArrayList<String> mImages, ArrayList<String> mPrices) {
         this.mImageNames = mImageNames;
         this.mImages = mImages;
         this.mContext = mContext;
+        this.mPrices=mPrices;
     }
 
     @NonNull
@@ -46,12 +49,15 @@ public class recycleviewadapter extends RecyclerView.Adapter<recycleviewadapter.
 
         holder.coinName.setText(mImageNames.get(position));
 
+        holder.coinPrice.setText("$"+mPrices.get(position));
+
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: clicked on"+ mImageNames.get(position));
 
-                Toast.makeText(mContext, mImageNames.get(position),Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, mPrices.get(position),Toast.LENGTH_SHORT).show();
+
                 
                 
             }
@@ -69,6 +75,7 @@ public class recycleviewadapter extends RecyclerView.Adapter<recycleviewadapter.
         CircleImageView image;
         TextView coinName;
         RelativeLayout parentLayout;
+        TextView coinPrice;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -76,6 +83,7 @@ public class recycleviewadapter extends RecyclerView.Adapter<recycleviewadapter.
             image= itemView.findViewById(R.id.image);
             coinName=itemView.findViewById(R.id.coinCard);
             parentLayout= itemView.findViewById(R.id.parent_layout);
+            coinPrice= itemView.findViewById(R.id.coinCardPrice);
 
         }
     }
