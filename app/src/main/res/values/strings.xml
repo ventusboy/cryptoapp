@@ -1,9 +1,6 @@
 <resources>
     <string name="app_name">crypto</string>
     <string name="usd_price">$0.00</string>
-    <string name="coin">undefined</string>
     <string name="searchcoin">Search Coin</string>
-    <string name="Search">searchcoinname</string>
-    <string name="searchcoinname">Search</string>
 
 </resources>

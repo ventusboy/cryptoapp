@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     Context context=this;
 
-    private static Context mContext;
+    //private static Context mContext;
 
 
     //vars
@@ -102,9 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static Context getContext() {
-        return mContext;
-    }
+
 
     public class init{
 
